@@ -24,8 +24,16 @@ services:
       - "3040:3040"
     volumes:
       - .:/usr/src/app
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
   rabbitmq:
     image: "rabbitmq:management"
     ports:
       - "5672:5672" #Default port
-      - "15672:15672" # Management port
+      - "15672:15672" #Management port
+volumes:
+  mongodb_data:
