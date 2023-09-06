@@ -19,7 +19,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
 	}
 
 	async validate(payload: JwtStrategyPayload) { //The Payload you pass @JWT signing
-		const user = await this.userService.findOne({ _id: payload.id })
+		const user = await this.userService.findOne({ _id: payload._id })
 		return stripPassword(user)
 	}
 }

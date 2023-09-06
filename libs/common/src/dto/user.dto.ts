@@ -1,17 +1,3 @@
-import { IsEmail, IsOptional, IsString } from "class-validator";
+import { UserDocument } from "apps/users/src/models/user.schema";
 
-export class UserDto {
-	@IsOptional()
-	@IsString()
-	name?: string
-
-	@IsEmail()
-	email: string;
-
-	@IsString()
-	password: string;
-
-	@IsOptional()
-	@IsString()
-	role?: string;
-}
+export class UserDto  extends UserDocument {}

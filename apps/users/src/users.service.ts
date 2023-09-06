@@ -8,7 +8,6 @@ import { compare, hash } from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { LoginDto } from './dto/login.dto';
-import { UserDto } from '@app/common';
 
 @Injectable()
 export class UsersService {
@@ -59,7 +58,7 @@ export class UsersService {
 		return user
 	}
 
-	async getJwtToken(user: UserDto) {
+	async getJwtToken(user: UserDocument) {
 		return await this.jwtService.signAsync(user)
 	}
 }
