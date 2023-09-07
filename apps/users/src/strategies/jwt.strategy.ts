@@ -13,7 +13,15 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
 		private readonly userService: UsersService,
 	) {
 		super({
-			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+			/**
+			 * on http, the auth header is added to headers, unlike other protocols
+			 *  auth is added directly to the the request.
+			 */
+			jwtFromRequest: ExtractJwt.fromExtractors([
+				request => {
+					return (request.headers || request)?.['authorization']?.split(' ')[1]
+				}
+			]),
 			secretOrKey: configService.getOrThrow<string>('JWT_SECRET'),
 		})
 	}

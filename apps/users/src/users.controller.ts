@@ -5,6 +5,7 @@ import { UpdateUserDto } from './dto/update-use.dto';
 import { FilterQuery } from 'mongoose';
 import { JwtAuthGuard, LocalAuthGuard } from './guards';
 import { GetUser, UserDto } from '@app/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 
 @Controller()
 export class UsersController {
@@ -46,5 +47,11 @@ export class UsersController {
 	@Delete(':id')
 	delete(@Param('id') id: string) {
 		return this.usersService.delete(id)
+	}
+	
+	@UseGuards(JwtAuthGuard)
+	@MessagePattern('authenticate')
+	authenticate(@Payload() { user }:{ user: UserDto }) {
+		return user
 	}
 }
