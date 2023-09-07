@@ -8,6 +8,9 @@ import { UserRepository } from './users.repository';
 import { JwtModule } from '@nestjs/jwt';
 import { LocalStrategy } from './strategies';
 import { JwtStrategy } from './strategies';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/apollo';
+import { UsersResolver } from './users.resolver';
 
 @Module({
   imports: [
@@ -28,8 +31,14 @@ import { JwtStrategy } from './strategies';
 		}),
 		inject: [ConfigService],
 	}),
+	GraphQLModule.forRoot<ApolloFederationDriverConfig>({
+		driver: ApolloFederationDriver,
+		autoSchemaFile: {	//auto generate the schema on-the-fly in memory
+			federation: 2,
+		},
+	})
   ],
   controllers: [UsersController],
-  providers: [UsersService, UserRepository, LocalStrategy, JwtStrategy],
+  providers: [UsersService, UserRepository, LocalStrategy, JwtStrategy, UsersResolver],
 })
 export class UsersModule {}

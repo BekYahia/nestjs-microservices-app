@@ -11,13 +11,9 @@ services:
     ports:
       - "3050:3050"
     volumes:
-      - ./apps/gateway:/usr/src/app/apps/gateway
-      #common files
-      - ./libs:/usr/src/app/libs
-      - ./package.json:/usr/src/app/package.json
-      - ./pnpm-lock.yaml:/usr/src/app/pnpm-lock.yaml
-      - ./tsconfig.json:/usr/src/app/tsconfig.json
-      - ./nest-cli.json:/usr/src/app/nest-cli.json
+      - .:/usr/src/app/
+    depends_on:
+      - users
   users:
     build:
       context: .
@@ -29,13 +25,7 @@ services:
     ports:
       - "3040:3040"
     volumes:
-      - ./apps/users:/usr/src/app/apps/users
-      #common files
-      - ./libs:/usr/src/app/libs
-      - ./package.json:/usr/src/app/package.json
-      - ./pnpm-lock.yaml:/usr/src/app/pnpm-lock.yaml
-      - ./tsconfig.json:/usr/src/app/tsconfig.json
-      - ./nest-cli.json:/usr/src/app/nest-cli.json
+      - .:/usr/src/app
   mongo:
     image: mongo
     ports:
