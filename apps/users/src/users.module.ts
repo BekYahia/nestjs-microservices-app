@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -11,6 +11,7 @@ import { JwtStrategy } from './strategies';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/apollo';
 import { UsersResolver } from './users.resolver';
+import { GatewayMiddleware } from './middlewares';
 
 @Module({
   imports: [
@@ -41,4 +42,9 @@ import { UsersResolver } from './users.resolver';
   controllers: [UsersController],
   providers: [UsersService, UserRepository, LocalStrategy, JwtStrategy, UsersResolver],
 })
-export class UsersModule {}
+
+export class UsersModule implements NestModule {
+	configure(consumer: MiddlewareConsumer) {
+		consumer.apply(GatewayMiddleware).forRoutes('/graphql')
+	}
+}
