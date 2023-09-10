@@ -24,7 +24,7 @@ Nest.js microservices application (users, orders, payments, notifications) with 
 
 ## Installation
 
-We recommend using [pnpm](https://pnpm.io) for package management. If you don't have it installed, you can do so with npm:
+I am using [pnpm](https://pnpm.io) for package management. If you don't have it installed, you can do so with npm:
 
 ```bash
 npm install -g pnpm
@@ -39,15 +39,14 @@ pnpm install
 1) Rename `.env.sample` to `.env` in each microservice.
 	- If you changed the port in one service, make sure to reflect these changes in other dependent services.
 1) Start MongoDB and RabbitMQ in detached mode:
-```bash
-docker compose up -d mongo rabbitmq
-```
+	```bash
+	docker compose up -d mongo rabbitmq
+	```
 
 1) start the API Gateway which will run the depends services also.
-
-```bash
-docker compose up gateway
-```
+	```bash
+	docker compose up gateway
+	```
 
 ## Overview
 ### Users
