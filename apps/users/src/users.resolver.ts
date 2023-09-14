@@ -10,7 +10,7 @@ import { UpdateUserDto } from "./dto/update-use.dto";
 export class UsersResolver { 
     constructor(private readonly userService: UsersService) {}
 
-    @Query(() => [UserDocument], { name: 'users' })
+    @Query(() => [UserDocument], { name: 'users', nullable: 'items' })
     findAll() {
         return this.userService.findAll({})
     }

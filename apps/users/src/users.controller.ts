@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, Res, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-use.dto';
@@ -6,7 +6,7 @@ import { FilterQuery } from 'mongoose';
 import { JwtAuthGuard, LocalAuthGuard } from './guards';
 import { GetUser, UserDto } from '@app/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-
+import * as client from 'prom-client'
 @Controller()
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -15,6 +15,12 @@ export class UsersController {
 	@Get()
 	findAll(@Query() query: FilterQuery<CreateUserDto>) {
 		return this.usersService.findAll(query)
+	}
+
+	@Get('metrics')
+	index(@Res({ passthrough: true }) response: any): Promise<string> {
+		response.header("Content-Type", client.register.contentType);
+		return client.register.metrics(); 
 	}
 
 	@UseGuards(JwtAuthGuard)

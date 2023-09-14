@@ -20,6 +20,7 @@ Nest.js microservices application (users, orders, payments, notifications) with 
   - [Orders](#orders)
   - [Payments](#payments)
   - [Notifications](#notifications)
+  - [Monitoring](#monitoring)
   - [Project Progress](#project-progress)
 
 ## Installation
@@ -70,6 +71,27 @@ pnpm install
 
 ### Notifications
 The `Notifications` service handles email notifications.
+
+## Monitoring
+
+Using Grafana and Prometheus for monitoring the microservices.
+
+### Accessing Metrics
+
+1) Start Grafana with
+	```bash
+	docker compose up grafana
+	```
+1) Access the Grafana dashboard at `http://localhost:5050` enter admin for username and password.
+
+- You can modify Prometheus settings such as scraping intervals and targets in the `prometheus.yml` configuration file.
+
+- Grafana configuration, including setting up Prometheus as a datasource and default dashboards, can be found in the `/grafana` directory.
+
+
+### Grafana Dashboard
+
+Explore the dedicated Grafana dashboard to monitor the performance and health of the microservices.
 
 ## Project Progress
 

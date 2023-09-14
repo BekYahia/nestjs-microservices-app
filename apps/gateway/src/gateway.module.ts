@@ -6,6 +6,7 @@ import { ApolloGatewayDriver, ApolloGatewayDriverConfig } from '@nestjs/apollo';
 import { IntrospectAndCompose, RemoteGraphQLDataSource } from '@apollo/gateway'
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { authContext } from './auth.context';
+import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { authContext } from './auth.context';
 		isGlobal: true,
 	}),
 	LoggerModule,
+	PrometheusModule.register(),
 	GraphQLModule.forRootAsync<ApolloGatewayDriverConfig>({
 		driver: ApolloGatewayDriver,
 		useFactory: (configService: ConfigService) => ({

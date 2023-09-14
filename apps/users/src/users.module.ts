@@ -12,6 +12,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/apollo';
 import { UsersResolver } from './users.resolver';
 import { GatewayMiddleware } from './middlewares';
+import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 
 @Module({
   imports: [
@@ -37,7 +38,8 @@ import { GatewayMiddleware } from './middlewares';
 		autoSchemaFile: {	//auto generate the schema on-the-fly in memory
 			federation: 2,
 		},
-	})
+	}),
+	PrometheusModule.register(),
   ],
   controllers: [UsersController],
   providers: [UsersService, UserRepository, LocalStrategy, JwtStrategy, UsersResolver],
